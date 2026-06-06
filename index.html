@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Análise · Simulado MAT | URE Caieiras</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;  /* ← mais fino (light) */
+  background: linear-gradient(145deg, #0a2f6c 0%, #041a3a 100%);
+  min-height: 100vh; padding: 20px; color: #1e293b;
+}
+.main-container {
+  max-width: 1400px; margin: 0 auto;
+  background: #0f1a24; border-radius: 48px; padding: 20px;
+  box-shadow: 0 30px 35px rgba(0,0,0,0.5), inset 0 1px 4px rgba(255,255,200,0.1);
+  border: 1px solid #d32f2f;
+}
+.header {
+  display:flex; justify-content:space-between; align-items:center;
+  background: rgba(10,47,108,0.85); backdrop-filter:blur(4px);
+  padding:12px 24px; border-radius:60px; margin-bottom:25px;
+  flex-wrap:wrap; gap:15px;
+}
+.logo-area { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.logo-area img { height:55px; width:auto; border-radius:12px; background:white; padding:4px; object-fit:contain; }
+.logo-text { font-size:1rem; font-weight:600; color:#ffec9e; line-height:1.3; }
+.title-badge { background:#d32f2f; color:white; padding:6px 18px; border-radius:3rem; font-weight:600; letter-spacing:1px; font-size:0.85rem; }
+
+/* TABS */
+.tabs-wrap { background:#0a2f6c; border-radius:60px; margin-bottom:25px; display:inline-flex; padding:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+.tab-btn { background:transparent; border:none; padding:10px 28px; font-family:'Inter',sans-serif; font-weight:500; font-size:0.9rem; border-radius:60px; color:rgba(255,255,255,0.7); cursor:pointer; transition:all 0.2s; }
+.tab-btn.active { background:#d32f2f; color:white; box-shadow:0 2px 6px rgba(0,0,0,0.2); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+/* INTRO BOX */
+.intro-box {
+  background: white; border-radius:20px; padding:18px 22px; margin-bottom:22px;
+  border-left: 5px solid #1565c0; font-size:13px; line-height:1.7;
+  font-weight: 300;
+}
+.intro-box.lp { border-left-color: #b71c1c; }
+.intro-box h3 { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:8px; color:#0f172a; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family:'Syne',sans-serif; font-size:13px; font-weight:800;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:white; background:#1565c0;
+  padding:8px 20px; border-radius:30px;
+  display:inline-flex; align-items:center; gap:8px;
+  margin-bottom:14px; margin-top:10px;
+}
+.section-title.lp { background:#b71c1c; }
+.section-title.gold { background:#b45309; }
+
+/* TABLE */
+.sim-table {
+  width:100%; border-collapse:collapse; font-size:12px;
+  background:white; border-radius:16px; overflow:hidden;
+  box-shadow:0 4px 16px rgba(0,0,0,0.12); margin-bottom:28px;
+}
+.sim-table thead tr { background:#0f172a; }
+.sim-table th {
+  padding:11px 12px; text-align:left; color:white;
+  font-family:'Syne',sans-serif; font-size:10px; font-weight:700;
+  letter-spacing:0.08em; text-transform:uppercase;
+}
+.sim-table td {
+  padding:9px 12px; border-bottom:1px solid #e2e8f0;
+  vertical-align:top; line-height:1.5;
+  font-weight: 300;
+}
+.sim-table tr:last-child td { border-bottom:none; }
+.sim-table tr:nth-child(even) td { background:#f8fafc; }
+.sim-table tr:hover td { background:#eff6ff; }
+
+/* Q NUM */
+.q-num {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:28px; height:28px; border-radius:8px;
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:800;
+  color:white; flex-shrink:0;
+}
+.q-num.mat { background:#1565c0; }
+.q-num.lp  { background:#b71c1c; }
+
+/* GAB */
+.gab-badge {
+  display:inline-block; font-family:'Syne',sans-serif; font-weight:800;
+  font-size:11px; width:24px; height:24px; border-radius:6px;
+  text-align:center; line-height:24px; color:white;
+}
+.gab-badge.mat { background:#1565c0; }
+.gab-badge.lp  { background:#b71c1c; }
+
+/* HABILIDADE BADGE */
+.hab-code {
+  display:inline-block; font-family:'Syne',sans-serif; font-weight:800;
+  font-size:10px; padding:2px 8px; border-radius:4px;
+  white-space:nowrap; margin-bottom:3px;
+}
+.hab-code.mat { background:#dbeafe; color:#1565c0; }
+.hab-code.lp  { background:#ffeaea; color:#b71c1c; }
+.hab-code.ef  { background:#e2e8f0; color:#374151; }
+.hab-code.ae  { background:#1565c0; color:white; }
+.hab-code.ae-lp { background:#b71c1c; color:white; }
+
+/* AE PILL */
+.ae-pill {
+  display:inline-block; font-size:10px; font-weight:700;
+  padding:2px 10px; border-radius:10px; white-space:nowrap;
+}
+.ae-pill.mat { background:#1565c0; color:white; }
+.ae-pill.lp  { background:#b71c1c; color:white; }
+.ae-pill.ext { background:#7c3aed; color:white; }
+
+/* AULA PILL */
+.aula-pill {
+  display:inline-block; font-size:10px; font-weight:700;
+  padding:2px 8px; border-radius:8px;
+  background:#f0fdf4; color:#15803d; border:1px solid #86efac;
+  white-space:nowrap; margin-right:2px;
+}
+
+/* PRIORIDADE */
+.prio { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; white-space:nowrap; }
+.prio.alta  { background:#fee2e2; color:#991b1b; }
+.prio.media { background:#fef3c7; color:#92400e; }
+.prio.baixa { background:#d1fae5; color:#065f46; }
+
+/* ORIGEM */
+.origem-tag { font-size:9px; font-weight:600; color:#6b7280; text-transform:uppercase; letter-spacing:0.06em; }
+
+/* DESCRITOR CELL */
+.desc-cell { font-size:11px; color:#374151; line-height:1.5; font-weight:300; }
+.desc-cell strong { color:#0f172a; font-size:12px; font-weight:500; }
+
+/* SUMÁRIO */
+.sumario-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+.sum-card {
+  background:white; border-radius:16px; padding:14px 16px;
+  border:1px solid #e2e8f0; text-align:center;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+}
+.sum-card .num { font-family:'Syne',sans-serif; font-size:28px; font-weight:700; line-height:1; }
+.sum-card .lbl { font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:#64748b; margin-top:4px; font-weight:500; }
+.sum-card.mat .num { color:#1565c0; }
+.sum-card.lp  .num { color:#b71c1c; }
+.sum-card.gold .num { color:#b45309; }
+.sum-card.green .num { color:#15803d; }
+
+/* COBERTURA */
+.cobertura-box { background:white; border-radius:20px; border:1px solid #e2e8f0; padding:20px; margin-bottom:24px; }
+.cobertura-box h3 { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; margin-bottom:14px; color:#0f172a; }
+.hab-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px; }
+.hab-item { display:flex; align-items:flex-start; gap:8px; padding:8px 10px; border-radius:12px; border:1px solid #e2e8f0; font-size:11px; line-height:1.4; font-weight:300; }
+.hab-item .code { font-family:'Syne',sans-serif; font-weight:800; font-size:10px; white-space:nowrap; flex-shrink:0; margin-top:1px; }
+.hab-item.mat-style .code { color:#1565c0; }
+.hab-item.lp-style  .code { color:#b71c1c; }
+.hab-item .freq { font-size:10px; font-weight:700; color:white; background:#dc2626; padding:1px 6px; border-radius:8px; margin-left:auto; flex-shrink:0; }
+
+footer { text-align:center; margin-top:2rem; padding:1rem; color:#b4c8e0; font-size:0.8rem; border-top:1px solid #2c4c6e; font-weight:300; }
+.print-btn {
+  position:fixed; bottom:24px; right:24px;
+  background:linear-gradient(135deg,#0a2f6c,#052050); color:white; border:none; border-radius:60px;
+  padding:12px 24px; font-weight:500; cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  display:flex; align-items:center; gap:8px;
+  font-family:'Inter',sans-serif; font-size:13px; z-index:10; transition:all 0.2s;
+}
+.print-btn:hover { background:#d32f2f; transform:translateY(-2px); }
+
+@media (max-width:700px) {
+  .sumario-grid { grid-template-columns:1fr 1fr; }
+  .hab-grid { grid-template-columns:1fr; }
+  .sim-table { font-size:11px; }
+}
+@media print {
+  body { background:white; padding:0; }
+  .main-container { background:white; padding:0; box-shadow:none; border:none; border-radius:0; }
+  .header, .tabs-wrap, .print-btn { display:none; }
+  .tab-panel { display:block !important; page-break-before:always; }
+  .tab-panel:first-of-type { page-break-before:avoid; }
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+</head>
+<body>
+<div class="main-container">
+
+  <div class="header">
+    <div class="logo-area">
+      <img src="https://i.ibb.co/0p01LzxB/logo3de.jpg" alt="Logo SEDUC São Paulo">
+      <div class="logo-text">URE CAIEIRAS — Seduc SP<br>Análise de Simulado SARESP · Matemática · 3ª Série EM · 2026</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div class="title-badge"><i class="fas fa-calculator"></i> MAT · Listas 1 e 2 · 48 questões</div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin-bottom:20px;">
+    <div class="tabs-wrap">
+      <button class="tab-btn active" onclick="switchTab('l1')"><i class="fas fa-list-ol"></i> Lista 1 · 24 questões</button>
+      <button class="tab-btn" onclick="switchTab('l2')"><i class="fas fa-list-ol"></i> Lista 2 · 24 questões</button>
+      <button class="tab-btn" onclick="switchTab('cob')"><i class="fas fa-chart-bar"></i> Cobertura geral</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ LISTA 1 ══════════════ -->
+  <div class="tab-panel active" id="tab-l1">
+
+    <div class="intro-box">
+      <h3>📐 Matemática · Lista 1 — Análise por questão</h3>
+      Cada linha mostra: número da questão · gabarito · habilidade da Prova Paulista · descritor / tema central · aula(s) do escopo-sequência relacionada(s) · AE. A origem indica de qual prova/série a questão foi extraída (todas do Provão Paulista 2025).
+    </div>
+
+    <div class="sumario-grid">
+      <div class="sum-card mat"><div class="num">24</div><div class="lbl">Questões Lista 1</div></div>
+      <div class="sum-card gold"><div class="num">8</div><div class="lbl">Habilidades distintas</div></div>
+      <div class="sum-card green"><div class="num">4</div><div class="lbl">AEs cobertas</div></div>
+      <div class="sum-card mat"><div class="num">4</div><div class="lbl">Séries de origem</div></div>
+    </div>
+
+    <div class="section-title"><i class="fas fa-table"></i> Tabela detalhada — Lista 1</div>
+    <table class="sim-table">
+      <thead>
+        <tr>
+          <th style="width:44px;">Q</th>
+          <th style="width:36px;">Gab</th>
+          <th style="width:90px;">Origem</th>
+          <th style="width:130px;">Código / Habilidade</th>
+          <th>Descritor / Tema central</th>
+          <th style="width:140px;">Aulas Escopo-Seq.</th>
+          <th style="width:80px;">AE</th>
+          <th style="width:70px;">Prioridade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="q-num mat">1</span></td>
+          <td><span class="gab-badge mat">C</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT21</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Planificação de sólido geométrico (prisma triangular reto)</strong><br>Reconhecer a planificação correta de um prisma — relações métricas de sólidos</td>
+          <td><span class="aula-pill">1º Bim não cobre</span><br><span style="font-size:10px;color:#64748b;">Conteúdo de Geometria Espacial — fora do escopo 3ª série 1º/2º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">2</span></td>
+          <td><span class="gab-badge mat">B</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT01</span><br><span class="hab-code ef">EF09MA11</span></td>
+          <td class="desc-cell"><strong>Porcentagem com dois gráficos de setores</strong><br>Calcular percentual combinando dois gráficos circulares — interpretação e porcentagem</td>
+          <td><span class="aula-pill">1º Bim A1–A2</span><br><span style="font-size:10px;color:#64748b;">Razão/proporcionalidade (Aula 1)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">3</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">9EF.MT08</span><br><span class="hab-code ef">EF09MA10</span></td>
+          <td class="desc-cell"><strong>Leitura de tabela de horários / interpretação de dados</strong><br>Identificar período de maior frequência de ônibus — proporcionalidade e leitura de tabela</td>
+          <td><span class="aula-pill">1º Bim A1</span><br><span style="font-size:10px;color:#64748b;">Razão entre grandezas (Aula 1)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">4</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT23</span><br><span class="hab-code ef">EM13MAT310</span></td>
+          <td class="desc-cell"><strong>Análise combinatória — princípio multiplicativo</strong><br>Contar combinações de cor, filtro e tamanho para um brasão comemorativo</td>
+          <td><span class="aula-pill">2º Bim A1–A4</span><br><span style="font-size:10px;color:#64748b;">Princípio multiplicativo (Aulas 1 e 4)</span></td>
+          <td><span class="ae-pill mat">AE3</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">5</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT04</span><br><span class="hab-code ef">EM13MAT304</span></td>
+          <td class="desc-cell"><strong>Progressão Geométrica / Função Exponencial</strong><br>Calcular valor de parcela de consórcio reajustada anualmente (produto de fatores de reajuste)</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">PG/Função exponencial — não está nos bimestres 1º e 2º da 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">6</span></td>
+          <td><span class="gab-badge mat">C</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT17</span><br><span class="hab-code ef">EM13MAT301</span></td>
+          <td class="desc-cell"><strong>Sistema linear 2×2 — situação-problema (divisão de custos)</strong><br>Três pessoas dividem custos de forma igualitária — sistema de equações lineares com 2 incógnitas</td>
+          <td><span class="aula-pill">1º Bim A9–A16</span><br><span style="font-size:10px;color:#64748b;">Sistemas 2×2: métodos e problemas (Aulas 9, 10, 11, 15)</span></td>
+          <td><span class="ae-pill mat">AE2</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">7</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT15</span><br><span class="hab-code ef">EM13MAT305</span></td>
+          <td class="desc-cell"><strong>Função logarítmica — Escala Richter</strong><br>Comparar magnitudes de terremotos usando função logarítmica</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Logaritmos — conteúdo da 2ª série, não consta nos bimestres analisados</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">8</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT03</span><br><span class="hab-code ef">EM13MAT302</span></td>
+          <td class="desc-cell"><strong>Progressão Aritmética — sequência com regras alternadas</strong><br>Calcular o nono elemento de uma sequência definida por regras para n par e ímpar</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">PA/PG — não aparece explicitamente no escopo 3ª série 1º/2º Bim do PDF</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">9</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT17</span><br><span class="hab-code ef">EM13MAT301</span></td>
+          <td class="desc-cell"><strong>Sistema linear 2×2 — comparação de tarifas de locadoras</strong><br>Encontrar ponto de equilíbrio entre duas funções lineares (tarifa fixa + variável)</td>
+          <td><span class="aula-pill">1º Bim A9–A16</span><br><span style="font-size:10px;color:#64748b;">Sistemas 2×2: interpretação geométrica (Aulas 13, 14, 15)</span></td>
+          <td><span class="ae-pill mat">AE2</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">10</span></td>
+          <td><span class="gab-badge mat">C</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">9EF.MT08</span><br><span class="hab-code ef">EF09MA10</span></td>
+          <td class="desc-cell"><strong>Razão/escala — lata cilíndrica em desenho técnico</strong><br>Calcular a escala usada comparando medida real com medida no desenho</td>
+          <td><span class="aula-pill">1º Bim A1</span><br><span style="font-size:10px;color:#64748b;">Razão entre grandezas de espécies diferentes (Aula 1)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">11</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT21</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Teorema de Pitágoras — percurso de peixe em aquário</strong><br>Calcular hipotenusa de triângulo retângulo formado dentro de um paralelepípedo</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Pitágoras — conteúdo da 1ª série; não consta no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">12</span></td>
+          <td><span class="gab-badge mat">B</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT02</span><br><span class="hab-code ef">EM13MAT313</span></td>
+          <td class="desc-cell"><strong>Notação científica — lixo eletrônico em milhões de toneladas</strong><br>Calcular produto e interpretar resultado em notação científica</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Notação científica — conteúdo da 2ª série 1º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">13</span></td>
+          <td><span class="gab-badge mat">C</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT19</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Semelhança de triângulos — triângulo ABC com ponto D no lado AC</strong><br>Aplicar relações métricas do triângulo: ângulos iguais, lados proporcionais → BC</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Semelhança — conteúdo da 1ª série; não no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">14</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT27</span><br><span class="hab-code ef">EM13MAT312</span></td>
+          <td class="desc-cell"><strong>Probabilidade condicional — sorteio de sabores sem reposição</strong><br>Calcular P(ambos receberem o mesmo sabor) com 15 sorvetes sem reposição</td>
+          <td><span class="aula-pill">2º Bim A21</span><br><span style="font-size:10px;color:#64748b;">Probabilidade condicional, eventos dependentes (Aula 21)</span></td>
+          <td><span class="ae-pill mat">AE5</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">15</span></td>
+          <td><span class="gab-badge mat">C</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">9EF.MT08</span><br><span class="hab-code ef">EF09MA10</span></td>
+          <td class="desc-cell"><strong>Proporcionalidade direta — queda populacional de tamanduás</strong><br>Aplicar razão constante de queda proporcional para estimar população futura</td>
+          <td><span class="aula-pill">1º Bim A1</span><br><span style="font-size:10px;color:#64748b;">Razão/proporcionalidade (Aula 1)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">16</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT20</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Área de figuras planas — chapa com discos recortados</strong><br>Calcular área que sobra após retirada de 49 círculos de área 150 cm² de uma chapa 100×100 cm</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Área de figuras planas — não consta no escopo 3ª série 1º/2º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">17</span></td>
+          <td><span class="gab-badge mat">B</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT22</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Volume de sólido — cubo com cubos menores retirados dos cantos</strong><br>Calcular volume restante após remoção de 8 cubos das pontas; converter cm³ em massa</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Volume de sólidos — não consta no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">18</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT01</span><br><span class="hab-code ef">EF09MA12</span></td>
+          <td class="desc-cell"><strong>Porcentagem — desconto de 15% em compra acima de R$100</strong><br>Calcular valor final com desconto percentual e verificar condição mínima de compra</td>
+          <td><span class="aula-pill">1º Bim A1–A2</span><br><span style="font-size:10px;color:#64748b;">Razão/proporcionalidade e equação 1º grau (Aulas 1, 2)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">19</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT17</span><br><span class="hab-code ef">EM13MAT301</span></td>
+          <td class="desc-cell"><strong>Sistema linear 2×2 — compra de bolas e molas para festa junina</strong><br>Montar e resolver sistema com 2 equações: quantidade total e valor total das prendas</td>
+          <td><span class="aula-pill">1º Bim A9–A15</span><br><span style="font-size:10px;color:#64748b;">Sistemas lineares 2×2 com problemas cotidianos (Aulas 9, 10, 11, 15)</span></td>
+          <td><span class="ae-pill mat">AE2</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">20</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT08</span><br><span class="hab-code ef">EM13MAT101</span></td>
+          <td class="desc-cell"><strong>Função afim — gráfico de crescimento de filmes em plataforma</strong><br>Identificar o ano com maior aumento percentual comparando valores consecutivos</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Função afim — conteúdo da 1ª série 2º Bim; não consta no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">21</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT08</span><br><span class="hab-code ef">EM13MAT401</span></td>
+          <td class="desc-cell"><strong>Função afim — pressão de mergulhador com gráfico linear</strong><br>Ler gráfico de função linear P(d) para determinar pressão a 70 m de profundidade</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Função afim / leitura de gráfico — conteúdo da 1ª série 2º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">22</span></td>
+          <td><span class="gab-badge mat">C</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT13</span><br><span class="hab-code ef">EM13MAT304</span></td>
+          <td class="desc-cell"><strong>Equação exponencial — resfriamento do bolo (T=20+160·2^(−0,25s))</strong><br>Calcular temperatura após 20 minutos substituindo s=20 na função exponencial</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Funções exponenciais — conteúdo da 2ª série; não consta no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">23</span></td>
+          <td><span class="gab-badge mat">B</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT17</span><br><span class="hab-code ef">EM13MAT301</span></td>
+          <td class="desc-cell"><strong>Sistema linear 2×2 — campeonato de futebol (vitórias e empates)</strong><br>Montar sistema com pontuação total e partidas não derrotadas para encontrar nº de vitórias</td>
+          <td><span class="aula-pill">1º Bim A9–A15</span><br><span style="font-size:10px;color:#64748b;">Sistemas lineares 2×2 com problemas (Aulas 10, 11, 15)</span></td>
+          <td><span class="ae-pill mat">AE2</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">24</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT06</span><br><span class="hab-code ef">EF07MA18</span></td>
+          <td class="desc-cell"><strong>Equação do 1º grau — soma de algarismos com restrição</strong><br>Encontrar dígito A+B a partir da equação 638+863+ABC=1887, com A, B, C algarismos</td>
+          <td><span class="aula-pill">1º Bim A1–A4</span><br><span style="font-size:10px;color:#64748b;">Equações do 1º grau e resolução de problemas (Aulas 1, 2, 4, 7)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div><!-- /tab-l1 -->
+
+
+  <!-- ══════════════ LISTA 2 ══════════════ -->
+  <div class="tab-panel" id="tab-l2">
+
+    <div class="intro-box">
+      <h3>📐 Matemática · Lista 2 — Análise por questão</h3>
+      Mesma estrutura da Lista 1. As questões foram extraídas do Provão Paulista 2025 de diferentes séries — a origem de cada questão está indicada no campo correspondente.
+    </div>
+
+    <div class="sumario-grid">
+      <div class="sum-card mat"><div class="num">24</div><div class="lbl">Questões Lista 2</div></div>
+      <div class="sum-card gold"><div class="num">9</div><div class="lbl">Habilidades distintas</div></div>
+      <div class="sum-card green"><div class="num">5</div><div class="lbl">AEs cobertas</div></div>
+      <div class="sum-card mat"><div class="num">4</div><div class="lbl">Séries de origem</div></div>
+    </div>
+
+    <div class="section-title"><i class="fas fa-table"></i> Tabela detalhada — Lista 2</div>
+    <table class="sim-table">
+      <thead>
+        <tr>
+          <th style="width:44px;">Q</th>
+          <th style="width:36px;">Gab</th>
+          <th style="width:90px;">Origem</th>
+          <th style="width:130px;">Código / Habilidade</th>
+          <th>Descritor / Tema central</th>
+          <th style="width:140px;">Aulas Escopo-Seq.</th>
+          <th style="width:80px;">AE</th>
+          <th style="width:70px;">Prioridade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="q-num mat">1</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">9EF.MT08</span><br><span class="hab-code ef">EF09MA10</span></td>
+          <td class="desc-cell"><strong>Razão/proporção — brasileiros na Europa (tabela)</strong><br>Calcular razão entre número de brasileiros em Portugal e no Reino Unido</td>
+          <td><span class="aula-pill">1º Bim A1</span><br><span style="font-size:10px;color:#64748b;">Razão entre grandezas de espécies diferentes (Aula 1)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">2</span></td>
+          <td><span class="gab-badge mat">B</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT22</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Volume/área — caixas decorativas paralelepípedo e tinta</strong><br>Calcular área total de 40 caixas pequenas + 20 médias e determinar latas de tinta necessárias</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Volume/área de sólidos — não consta no escopo 3ª série 1º/2º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">3</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT01</span><br><span class="hab-code ef">EF09MA11</span></td>
+          <td class="desc-cell"><strong>Porcentagem — gastos familiares em gráfico de pizza</strong><br>Identificar a legenda correta de gráfico de setores com 5 categorias de despesas</td>
+          <td><span class="aula-pill">1º Bim A1–A2</span><br><span style="font-size:10px;color:#64748b;">Razão/proporcionalidade (Aula 1)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">4</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT11</span><br><span class="hab-code ef">EM13MAT302</span></td>
+          <td class="desc-cell"><strong>Função do 2º grau — gráfico de f(x)=(x-5)(x+3) e translação f(x+2)</strong><br>Identificar gráfico da função após translação horizontal de 2 unidades à esquerda</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Função do 2º grau e seus gráficos — não consta no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">5</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT01</span><br><span class="hab-code ef">EF09MA11</span></td>
+          <td class="desc-cell"><strong>Porcentagem — preferência de moradores de condomínio (gráfico de barras)</strong><br>Calcular porcentagem de votos na cor Cinza em relação ao total de apartamentos do condomínio</td>
+          <td><span class="aula-pill">1º Bim A1–A2</span><br><span style="font-size:10px;color:#64748b;">Razão/proporcionalidade (Aula 1)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">6</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT04</span><br><span class="hab-code ef">EM13MAT304</span></td>
+          <td class="desc-cell"><strong>PA/Função afim — cisternas empilháveis (capacidade cresce +250 L por cisterna)</strong><br>Calcular capacidade total de reservatório com 10 cisternas seguindo progressão aritmética</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">PA — não está no escopo 3ª série 1º/2º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">7</span></td>
+          <td><span class="gab-badge mat">B</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT19</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Trigonometria — compasso com cos(α)=7/9 e hastes de 12 cm</strong><br>Calcular raio da circunferência traçada usando relações trigonométricas no triângulo isósceles</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Trigonometria — não consta no escopo 3ª série 1º/2º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">8</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT20</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Área de figuras planas — folha quadrada com cantos cortados</strong><br>Calcular área restante após corte de 4 triângulos retângulos isósceles de 10×10 cm</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Área de figuras planas — não consta no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">9</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT12</span><br><span class="hab-code ef">EM13MAT304</span></td>
+          <td class="desc-cell"><strong>Função exponencial — área de coral invasor (A(t)=100·2^t)</strong><br>Calcular área coberta após 3 meses substituindo t=3 na função exponencial</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Função exponencial — conteúdo da 2ª série; não no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">10</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT24</span><br><span class="hab-code ef">EM13MAT310</span></td>
+          <td class="desc-cell"><strong>Análise combinatória — seleção de 3 famílias com pelo menos 2 com filhos</strong><br>Contar maneiras de selecionar 3 de 10 famílias com restrição: pelo menos 2 com filhos (combinação)</td>
+          <td><span class="aula-pill">2º Bim A5–A8</span><br><span style="font-size:10px;color:#64748b;">Combinação simples com restrição (Aulas 5, 6, 7)</span></td>
+          <td><span class="ae-pill mat">AE3</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">11</span></td>
+          <td><span class="gab-badge mat">C</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT19</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Semelhança de triângulos — localização de celular por triângulos inscritos</strong><br>Aplicar razão de semelhança 1/2 sucessivamente para calcular lado GH em km</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Semelhança — conteúdo da 1ª série; não no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">12</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT09</span><br><span class="hab-code ef">EF09MA09</span></td>
+          <td class="desc-cell"><strong>Equação do 2º grau — custo mínimo por aluno (C(x)=x²−20x+300)</strong><br>Encontrar vértice da parábola (ponto de mínimo) para determinar número ideal de alunos</td>
+          <td><span class="aula-pill">1º Bim A5–A8</span><br><span style="font-size:10px;color:#64748b;">Equação do 2º grau completa, Bhaskara e vértice (Aulas 5, 6, 8)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">13</span></td>
+          <td><span class="gab-badge mat">B</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT17</span><br><span class="hab-code ef">EM13MAT301</span></td>
+          <td class="desc-cell"><strong>Sistema linear 2×2 — lanchonete com sucos e refrigerantes</strong><br>Montar e resolver sistema: 100 bebidas, 20 sucos, calcular gasto total com preços diferentes</td>
+          <td><span class="aula-pill">1º Bim A9–A15</span><br><span style="font-size:10px;color:#64748b;">Sistemas lineares 2×2 com problemas cotidianos (Aulas 9, 10, 11, 15)</span></td>
+          <td><span class="ae-pill mat">AE2</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">14</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT06</span><br><span class="hab-code ef">EF07MA18</span></td>
+          <td class="desc-cell"><strong>Equação do 1º grau — número de fatias de queijo muçarela</strong><br>Usar proporção: 300g ÷ (30g/porção × 2 fatias/porção) para calcular fatias totais</td>
+          <td><span class="aula-pill">1º Bim A1–A4</span><br><span style="font-size:10px;color:#64748b;">Equações do 1º grau e razão (Aulas 1, 2, 4)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">15</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT06</span><br><span class="hab-code ef">EF07MA18</span></td>
+          <td class="desc-cell"><strong>Equação do 1º grau — acréscimo no valor de corrida de táxi</strong><br>Calcular diferença de custo: (R$6,00 + R$4,25×10) − (R$5,50 + R$4,00×10)</td>
+          <td><span class="aula-pill">1º Bim A1–A4</span><br><span style="font-size:10px;color:#64748b;">Equações do 1º grau com problemas cotidianos (Aulas 2, 4, 7)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">16</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT19</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Relações métricas do triângulo — triângulo retângulo com ponto D no lado AC</strong><br>Determinar sen(α) e ângulo β usando Teorema de Pitágoras e relações trigonométricas</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Relações métricas/trigonometria — conteúdo da 1ª série; não no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">17</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT22</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Volume de cilindro — caixa d'água industrial (V=π·r²·h)</strong><br>Calcular volume do cilindro com r=3m, h=10m e π=3; converter para litros</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Volume de cilindro — não consta no escopo 3ª série 1º/2º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">18</span></td>
+          <td><span class="gab-badge mat">B</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT20</span><br><span class="hab-code ef">EM13MAT308</span></td>
+          <td class="desc-cell"><strong>Área de trapézio — terreno com pistas de caminhada e áreas verdes</strong><br>Calcular área cinza (terreno − 2 trapézios) e multiplicar pelo preço do m² do piso</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Área de figuras planas (trapézio) — não consta no escopo 3ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">19</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT13</span><br><span class="hab-code ef">EM13MAT304</span></td>
+          <td class="desc-cell"><strong>Função exponencial — crescimento de área de coral (A(t)=100·2^t)</strong><br>Mesma equação da Lista 1 Q9 — calcular A(3)=100·8=800 m²</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Função exponencial — conteúdo da 2ª série</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">20</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT02</span><br><span class="hab-code ef">EM13MAT313</span></td>
+          <td class="desc-cell"><strong>Notação científica — número de seguidores do Instagram</strong><br>Representar 653 milhões em notação científica correta: 6,53 × 10⁸</td>
+          <td><span class="aula-pill">Fora escopo</span><br><span style="font-size:10px;color:#64748b;">Notação científica — conteúdo da 2ª série 1º Bim</span></td>
+          <td><span class="ae-pill ext">Fora AE</span></td>
+          <td><span class="prio baixa">Baixa</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">21</span></td>
+          <td><span class="gab-badge mat">E</span></td>
+          <td><span class="origem-tag">PP 2025 · 1ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT05</span><br><span class="hab-code ef">EF07MA18</span></td>
+          <td class="desc-cell"><strong>Equação do 2º grau — largura de borda de colcha retangular</strong><br>Montar equação: (2,5+2x)(3+2x) − 2,5×3 = 3 → resolver equação do 2º grau</td>
+          <td><span class="aula-pill">1º Bim A5–A8</span><br><span style="font-size:10px;color:#64748b;">Equação do 2º grau completa e Bhaskara (Aulas 5, 6, 7, 8)</span></td>
+          <td><span class="ae-pill mat">AE1</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">22</span></td>
+          <td><span class="gab-badge mat">A</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT17</span><br><span class="hab-code ef">EM13MAT301</span></td>
+          <td class="desc-cell"><strong>Regra de três composta / sistema — produção de memes por equipe</strong><br>Calcular número de funcionários extras necessários para nova meta usando proporcionalidade</td>
+          <td><span class="aula-pill">1º Bim A9–A15</span><br><span style="font-size:10px;color:#64748b;">Sistemas lineares 2×2 e proporcionalidade (Aulas 9, 15)</span></td>
+          <td><span class="ae-pill mat">AE2</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">23</span></td>
+          <td><span class="gab-badge mat">D</span></td>
+          <td><span class="origem-tag">PP 2025 · 3ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT17</span><br><span class="hab-code ef">EM13MAT301</span></td>
+          <td class="desc-cell"><strong>Sistema linear 2×2 — lanchonete com sucos e refrigerantes</strong><br>Resolver sistema com quantidade total e custo total para encontrar gastos (mesmo tema da L1 Q19 com variação)</td>
+          <td><span class="aula-pill">1º Bim A9–A15</span><br><span style="font-size:10px;color:#64748b;">Sistemas 2×2 com problemas cotidianos (Aulas 10, 11, 15)</span></td>
+          <td><span class="ae-pill mat">AE2</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+        <tr>
+          <td><span class="q-num mat">24</span></td>
+          <td><span class="gab-badge mat">C</span></td>
+          <td><span class="origem-tag">PP 2025 · 2ª Série</span></td>
+          <td><span class="hab-code mat">3EM.MT23</span><br><span class="hab-code ef">EM13MAT310</span></td>
+          <td class="desc-cell"><strong>Análise combinatória — princípio multiplicativo (foto + música)</strong><br>Contar maneiras de escolher 1 foto entre 3 e 1 música entre 4: 3×4=12</td>
+          <td><span class="aula-pill">2º Bim A1–A4</span><br><span style="font-size:10px;color:#64748b;">Princípio multiplicativo (Aulas 1, 4)</span></td>
+          <td><span class="ae-pill mat">AE3</span></td>
+          <td><span class="prio alta">Alta</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div><!-- /tab-l2 -->
+
+
+  <!-- ══════════════ COBERTURA GERAL ══════════════ -->
+  <div class="tab-panel" id="tab-cob">
+
+    <div class="intro-box">
+      <h3>📊 Cobertura geral — Matemática · Listas 1 e 2 combinadas</h3>
+      Resumo das habilidades mais cobradas nos dois simulados, com indicação de frequência e quais aulas do escopo-sequência as cobrem. Use esta visão para priorizar o plano de recomposição.
+    </div>
+
+    <div class="sumario-grid">
+      <div class="sum-card mat"><div class="num">48</div><div class="lbl">Total de questões</div></div>
+      <div class="sum-card gold"><div class="num">26</div><div class="lbl">Questões no escopo 3ª série</div></div>
+      <div class="sum-card green"><div class="num">22</div><div class="lbl">Questões fora do escopo</div></div>
+      <div class="sum-card mat"><div class="num">54%</div><div class="lbl">Cobertura pelo escopo</div></div>
+    </div>
+
+    <div class="cobertura-box">
+      <h3>🎯 Habilidades mais cobradas nos dois simulados — por frequência</h3>
+      <div class="hab-grid">
+        <div class="hab-item mat-style"><span class="code">3EM.MT17</span><span class="desc">Sistemas lineares (2×2) — situações-problema</span><span class="freq">7×</span></div>
+        <div class="hab-item mat-style"><span class="code">3EM.MT06</span><span class="desc">Problemas com equação do 1º grau</span><span class="freq">4×</span></div>
+        <div class="hab-item mat-style"><span class="code">3EM.MT01</span><span class="desc">Porcentagem e razão</span><span class="freq">4×</span></div>
+        <div class="hab-item mat-style"><span class="code">9EF.MT08</span><span class="desc">Proporcionalidade direta e razão</span><span class="freq">3×</span></div>
+        <div class="hab-item mat-style"><span class="code">3EM.MT23</span><span class="desc">Contagem / Princípio multiplicativo</span><span class="freq">2×</span></div>
+        <div class="hab-item mat-style"><span class="code">3EM.MT24</span><span class="desc">Combinação simples com restrição</span><span class="freq">1×</span></div>
+        <div class="hab-item mat-style"><span class="code">3EM.MT27</span><span class="desc">Probabilidade condicional (sem reposição)</span><span class="freq">1×</span></div>
+        <div class="hab-item mat-style"><span class="code">3EM.MT09</span><span class="desc">Equação do 2º grau — ponto de mínimo</span><span class="freq">1×</span></div>
+        <div class="hab-item mat-style"><span class="code">3EM.MT05</span><span class="desc">Equação do 2º grau — situação-problema</span><span class="freq">1×</span></div>
+      </div>
+    </div>
+
+    <div class="cobertura-box">
+      <h3>⚠️ Habilidades fora do escopo 3ª série — apareceram no simulado mas não estão nos 1º/2º Bim</h3>
+      <div class="hab-grid">
+        <div class="hab-item" style="border-color:#fca5a5;"><span class="code" style="color:#dc2626;">3EM.MT19–22</span><span class="desc">Geometria: semelhança, Pitágoras, áreas e volumes de sólidos</span><span class="freq" style="background:#dc2626;">7×</span></div>
+        <div class="hab-item" style="border-color:#fca5a5;"><span class="code" style="color:#dc2626;">3EM.MT12–13</span><span class="desc">Funções exponenciais (crescimento, resfriamento)</span><span class="freq" style="background:#dc2626;">3×</span></div>
+        <div class="hab-item" style="border-color:#fca5a5;"><span class="code" style="color:#dc2626;">3EM.MT08/11</span><span class="desc">Funções afim e do 2º grau — gráficos e análise</span><span class="freq" style="background:#dc2626;">3×</span></div>
+        <div class="hab-item" style="border-color:#fca5a5;"><span class="code" style="color:#dc2626;">3EM.MT03/04</span><span class="desc">PA e PG</span><span class="freq" style="background:#dc2626;">2×</span></div>
+        <div class="hab-item" style="border-color:#fca5a5;"><span class="code" style="color:#dc2626;">3EM.MT02</span><span class="desc">Notação científica</span><span class="freq" style="background:#dc2626;">2×</span></div>
+        <div class="hab-item" style="border-color:#fca5a5;"><span class="code" style="color:#dc2626;">3EM.MT15</span><span class="desc">Função logarítmica (Escala Richter)</span><span class="freq" style="background:#dc2626;">1×</span></div>
+      </div>
+    </div>
+
+    <div class="section-title gold"><i class="fas fa-lightbulb"></i> Recomendações para o plano de recomposição</div>
+    <div style="background:white;border-radius:20px;padding:20px;border:1px solid #e2e8f0;font-size:13px;line-height:1.8;margin-bottom:24px; font-weight:300;">
+      <p><strong>1. Prioridade máxima (no escopo):</strong> Sistemas lineares 2×2 com situações-problema (3EM.MT17) — aparece 7× nos dois simulados. Reforçar Aulas 9–15 do 1º Bim com problemas de contexto cotidiano variado.</p>
+      <p style="margin-top:8px;"><strong>2. Alta prioridade (no escopo):</strong> Equações do 1º grau com porcentagem e razão (MT01, MT06, 9EF.MT08) — 11 questões combinadas. Retomar Aulas 1–4 do 1º Bim com ênfase em resolução de problemas contextualizados.</p>
+      <p style="margin-top:8px;"><strong>3. Alta prioridade (no escopo):</strong> Análise Combinatória (MT23/MT24) e Probabilidade Condicional (MT27) — 4 questões. Trabalhar Aulas 1–8 do 2º Bim e Aula 21.</p>
+      <p style="margin-top:8px;"><strong>4. Atenção extra (fora do escopo):</strong> Geometria espacial (MT19–22) aparece 7× — mesmo sendo conteúdo de outras séries, o SARESP cobra. Incluir revisão rápida de área de figuras planas e volume no Bloco F (simulado final).</p>
+      <p style="margin-top:8px;"><strong>5. Funções (MT08/11/12/13):</strong> Cobradas em 6 questões mas fora do escopo 3ª série 1º/2º Bim. Indicado ao menos uma aula de revisão de leitura de gráficos de funções afim e exponencial.</p>
+    </div>
+
+  </div><!-- /tab-cob -->
+
+  <footer>
+    <i class="fas fa-calculator"></i>
+    URE Caieiras · Análise de Simulado SARESP · Matemática · Listas 1 e 2 · 3ª Série EM · 2026
+  </footer>
+
+</div><!-- /main-container -->
+
+<button class="print-btn" onclick="window.print()">
+  <i class="fas fa-print"></i> Imprimir / PDF
+</button>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  const idx = ['l1','l2','cob'].indexOf(tab);
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+}
+</script>
+</body>
+</html>
